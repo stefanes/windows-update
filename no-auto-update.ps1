@@ -1,10 +1,8 @@
 ﻿#Requires -RunAsAdministrator
 
-# Windows Update
-$registryPath = "HKLM:\SOFTWARE\Policies\Microsoft\Windows"
-New-Item -Path $registryPath -Name WindowsUpdate
-$registryPath += "\WindowsUpdate"
-New-Item -Path $registryPath -Name AU
-$registryPath += "\AU"
+$registryPath = "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU"
+if (-Not (Test-Path -Path $registryPath)) {
+    New-Item -Path $registryPath -ItemType Directory -Force
+}
 
 Set-ItemProperty -Path $registryPath -Name NoAutoUpdate -Value 1
